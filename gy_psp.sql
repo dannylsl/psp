@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 27, 2016 at 04:02 PM
+-- Generation Time: Mar 27, 2016 at 09:04 PM
 -- Server version: 5.5.47-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `accinfo` (
 --
 
 INSERT INTO `accinfo` (`acc_id`, `accemail`, `password`, `accname`, `company`, `url`, `flow`, `adminlist`, `registertime`, `lastentrytime`, `lastentryip`, `status`) VALUES
-(1, 'test@test.com', 'e10adc3949ba59abbe56e057f20f883e', '', '', '', 0, '', '2014-11-06', '2016-03-27 13:50:38', '127.0.0.1', 1);
+(1, 'test@test.com', 'e10adc3949ba59abbe56e057f20f883e', '', '', '', 0, '', '2014-11-06', '2016-03-27 17:30:41', '127.0.0.1', 1);
 
 -- --------------------------------------------------------
 
@@ -59,6 +59,7 @@ INSERT INTO `accinfo` (`acc_id`, `accemail`, `password`, `accname`, `company`, `
 CREATE TABLE IF NOT EXISTS `articles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) CHARACTER SET gb2312 NOT NULL,
+  `category` int(11) NOT NULL,
   `source` varchar(200) COLLATE utf8_bin NOT NULL,
   `author` varchar(50) CHARACTER SET gb2312 NOT NULL,
   `content` text CHARACTER SET gb2312 NOT NULL,
@@ -66,7 +67,31 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `time` time NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `articles`
+--
+
+INSERT INTO `articles` (`id`, `title`, `category`, `source`, `author`, `content`, `date`, `time`, `status`) VALUES
+(2, '', 0, '', '', '', '0000-00-00', '00:00:00', 0),
+(3, '', 0, '', '', '', '0000-00-00', '00:00:00', 0),
+(4, '', 0, '', '', '', '0000-00-00', '00:00:00', 0),
+(5, '', 0, '', '', 'qweqwewqewqe', '0000-00-00', '00:00:00', 0),
+(6, '0', 0, '本站发布', '', '0', '0000-00-00', '00:00:00', 0),
+(7, 'aaaaa', 9, '本站发布', '', '<p>adfasfsfsdf</p><p><br/></p><p>asdfsdf</p><p><br/></p><p><br/></p><p>asdfdsf</p>', '0000-00-00', '00:00:00', 0);
+
+--
+-- Triggers `articles`
+--
+DROP TRIGGER IF EXISTS `empty_check`;
+DELIMITER //
+CREATE TRIGGER `empty_check` BEFORE INSERT ON `articles`
+ FOR EACH ROW if NEW.content = '' then
+signal sqlstate '45000';
+end if
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -81,14 +106,17 @@ CREATE TABLE IF NOT EXISTS `captcha` (
   `word` varchar(20) NOT NULL,
   PRIMARY KEY (`captcha_id`),
   KEY `word` (`word`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `captcha`
 --
 
 INSERT INTO `captcha` (`captcha_id`, `captcha_time`, `ip_address`, `word`) VALUES
-(32, 1459057835, '127.0.0.1', 'hjan');
+(33, 1459070566, '127.0.0.1', 'i27b'),
+(34, 1459070614, '127.0.0.1', 'xizs'),
+(35, 1459070621, '127.0.0.1', 'jivs'),
+(36, 1459071036, '127.0.0.1', 'st0i');
 
 -- --------------------------------------------------------
 
