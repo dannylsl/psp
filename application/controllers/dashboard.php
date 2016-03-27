@@ -350,17 +350,39 @@ class DashBoard extends CI_Controller {
 
     public function article_add() {
         $this->load->helper("url");
+        $this->load->helper("form");
         $data['navbar'] = "4";
         $data['acc_id'] = $this->islogined();
         $data['accemail'] = $this->session->userdata("accemail");
 
+        $this->load->model("category_model");
+        $page['category'] = $this->category_model->getAll();
+        $page['id'] = 0;
+
         $this->load->view('admin/header');
         $this->load->view('admin/navbar',$data);
-        $this->load->view('admin/article');
+        $this->load->view('admin/article', $page);
         $this->load->view('admin/footer');
     }
 
     public function article_save() {
+        $this->islogined();
+        $this->load->model("article_model");
+
+        $data['title'] = $this->input->post('title');
+        $data['source'] = $this->input->post('source');
+        if(empty($data['source'])) {
+            $data['source'] = "本站发布";
+        }
+        $data['category'] = $this->input->post('category');
+        $data['content'] = $this->input->post('content');
+
+        if($this->article_model->add($data)) {
+            $data['ret'] = 0; //成功
+        }else{
+            $data['ret'] = 1; //失败
+        };
+        echo json_encode($data);
     }
 
     public function article_edit() {

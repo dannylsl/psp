@@ -10,6 +10,9 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
+                    <div class="col-lg-12 col-md-12">
+                    <a href="<?php echo base_url()?>index.php/dashboard/article_add" class="btn btn-primary">新增文章</a>
+                    </div>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -24,13 +27,19 @@
                                 <td>1</td>
                                 <td>关于XXXXXXX的活动通知</td>
                                 <td>政策公告</td>
-                                <td>编辑|删除</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning" id="btn_edit">编辑</button>
+                                    <button class="btn btn-sm btn-danger" id="btn_del">删除</button>
+                                </td>
                             </tr>
                             <tr>
                                 <td>2</td>
                                 <td>关于XXXXXXX的活动通知</td>
                                 <td>电子服务</td>
-                                <td>编辑|删除</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning" id="btn_edit">编辑</button>
+                                    <button class="btn btn-sm btn-danger" id="btn_del">删除</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
