@@ -6,8 +6,8 @@ function validate() {
         return false;
     }
 
-    if($("#category").val() == "") {
-        alert("请输入类别名称");
+    if($("#category").val() == 0) {
+        alert("请选择类别名称");
         $("#category").focus();
         return false;
     }
