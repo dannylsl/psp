@@ -24,15 +24,6 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>关于XXXXXXX的活动通知</td>
-                                <td>政策公告</td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning" id="btn_edit">编辑</button>
-                                    <button class="btn btn-sm btn-danger" id="btn_del">删除</button>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>2</td>
                                 <td>关于XXXXXXX的活动通知</td>
                                 <td>电子服务</td>
@@ -43,6 +34,11 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <?php
+                        echo $this->table->generate($articles);
+                        echo $this->pagination->create_links();
+                    ?>
                 </div>
             </div>
         </div>

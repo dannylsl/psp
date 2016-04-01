@@ -338,13 +338,36 @@ class DashBoard extends CI_Controller {
 
     public function articles() {
         $this->load->helper("url");
+        $this->load->library("pagination");
         $data['navbar'] = "4";
         $data['acc_id'] = $this->islogined();
         $data['accemail'] = $this->session->userdata("accemail");
+        
+        $config['base_url'] = site_url('books/index');
+        $config['total_rows'] = $this->db->count_all('articles');
+        $config['per_page'] = 10;
+        $config['uri_segment'] = 3;
+        $config['full_tag_open'] = '<p>';
+        $config['full_tag_cloase'] = '</p>';
+
+        $this->pagination->initialize($config);
+
+        $this->load->model("article_model");
+        $articles['articles'] = $this->article_model->get_articles($config['per_page'], $this->uri->segment(3));
+
+        $this->load->library('table');
+        $tmpl = array(
+            'table_open'    => "<table class='table table-striped table-hover'>",
+            'row_alt_start'       => '<tr>',
+            'row_alt_end'         => "<td><button class='btn btn-sm btn-warning' id='btn_edit'>编辑</button> <button class='btn btn-sm btn-danger' id='btn_del'>删除</button> </td></tr>",
+            'table_close'   => '</table>'
+        );
+        $this->table->set_template($tmpl);
+        $this->table->set_heading('序号', '文章标题', '类别', '操作');
 
         $this->load->view('admin/header');
         $this->load->view('admin/navbar',$data);
-        $this->load->view('admin/article_list');
+        $this->load->view('admin/article_list', $articles);
         $this->load->view('admin/footer');
     }
 

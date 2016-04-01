@@ -41,4 +41,14 @@ class Article_model extends CI_Model {
             return false;
         }
     }
+
+    public function get_articles($num, $offset) {
+        $query = $this->db->get('articles', $num, $offset);
+        return $query;
+    }
+
+    public function getAll() {
+        $query = $this->db->get('articles');
+        return $query->result_array();
+    }
 }
