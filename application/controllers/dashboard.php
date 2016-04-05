@@ -272,14 +272,52 @@ class DashBoard extends CI_Controller {
 
     public function slides() {
         $this->load->helper("url");
+        $this->load->helper("form");
         $data['navbar'] = "2";
         $data['acc_id'] = $this->islogined();
         $data['accemail'] = $this->session->userdata("accemail");
+
+
 
         $this->load->view('admin/header');
         $this->load->view('admin/navbar',$data);
         $this->load->view('admin/slides');
         $this->load->view('admin/footer');
+    }
+
+    public function slide_upload() {
+        $this->islogined();
+        
+        $config['upload_path'] = "./uploads/slides/";
+        $config['allowed_types'] = "jpg|png|bmp";
+        $config['max_size'] = "1024";
+        $config['max_width'] = "1920";
+        $config['max_height'] = "1280";
+
+        $this->load->library('upload', $config);
+	    if ( ! $this->upload->do_upload()) {
+			$data['error'] = array('error' => $this->upload->display_errors());
+		} else {
+			$data = array('upload_data' => $this->upload->data());
+            $this->load->library('image_lib');
+
+            $img_config['image_library'] = "gd2";
+            $img_config['source_image'] = $data['upload_data']['full_path'];
+            $img_config['create_thumb'] = TRUE;
+
+            $img_config['maintain_ratio'] = TRUE;
+            $img_config['width'] = 140;
+            $img_config['height'] = 80;
+
+            $this->load->library('image_lib', $img_config); 
+            $this->image_lib->initialize($img_config);
+            if($this->image_lib->resize()) {
+                echo $data['error'] = $this->image_lib->display_errors();
+            }
+
+		}
+
+        redirect('/dashboard/slides','refresh');
     }
 
     public function category() {
