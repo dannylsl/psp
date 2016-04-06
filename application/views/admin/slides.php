@@ -23,30 +23,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                       <img src="/images/slides/a.png" class="img-polaroid" style="width: 140px;">
-                                    </td>
-                                    <td>文本文本文本文本文本文本文本文本文本文本文本文本文本文本</td>
-                                    <td>显示</td>
-                                    <td>删除 修改</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       <img src="/images/slides/b.png" class="img-polaroid" style="width: 140px;">
-                                    </td>
-                                    <td>文本文本文本文本文本文本文本文本文本文本文本文本文本文本</td>
-                                    <td>显示</td>
-                                    <td>删除 修改</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       <img src="/images/slides/a.png" class="img-polaroid" style="width: 140px;">
-                                    </td>
-                                    <td>文本文本文本文本文本文本文本文本文本文本文本文本文本文本</td>
-                                    <td>显示</td>
-                                    <td>删除 修改</td>
-                                </tr>
+                                <?php
+foreach($slides as $slide) {
+    echo "<tr>";
+    echo '<td><img class="img-polaroid" src="'.$slide['thumbnail'].'"></td>';
+    echo '<td>'.$slide['text'].'</td>';
+    echo '<td>'.($slide['status']==1?'显示':'不显示').'</td>';
+    echo '<td>删除 修改</td>';
+    echo "</tr>";
+}
+                                ?>
                         </tbody>
                     </table>
                 </div>

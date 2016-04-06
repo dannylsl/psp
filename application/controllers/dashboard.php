@@ -277,11 +277,12 @@ class DashBoard extends CI_Controller {
         $data['acc_id'] = $this->islogined();
         $data['accemail'] = $this->session->userdata("accemail");
 
-
+        $this->load->model("slide_model");
+        $slides['slides'] = $this->slide_model->getAll();
 
         $this->load->view('admin/header');
         $this->load->view('admin/navbar',$data);
-        $this->load->view('admin/slides');
+        $this->load->view('admin/slides',$slides);
         $this->load->view('admin/footer');
     }
 
@@ -301,20 +302,34 @@ class DashBoard extends CI_Controller {
 			$data = array('upload_data' => $this->upload->data());
             $this->load->library('image_lib');
 
+            $slide['path'] = "/uploads/slides/".$data['upload_data']['raw_name'].$data['upload_data']['file_ext'];
+            $slide['thumbnail'] = "/uploads/slides/".$data['upload_data']['raw_name']."_thumb".$data['upload_data']['file_ext'];
+            //$slide['timestamp'] = time();
+            $slide['text'] = $this->input->post('description');
+            $slide['url'] = $this->input->post('url');
+            $slide['status'] = $this->input->post('status');
+
             $img_config['image_library'] = "gd2";
             $img_config['source_image'] = $data['upload_data']['full_path'];
             $img_config['create_thumb'] = TRUE;
-
             $img_config['maintain_ratio'] = TRUE;
             $img_config['width'] = 140;
             $img_config['height'] = 80;
 
             $this->load->library('image_lib', $img_config); 
             $this->image_lib->initialize($img_config);
-            if($this->image_lib->resize()) {
-                echo $data['error'] = $this->image_lib->display_errors();
-            }
+            if($resize = $this->image_lib->resize()) {
+                $data['error'] = $this->image_lib->display_errors();
+                $this->load->model("slide_model");
 
+                if($this->slide_model->add($slide)) {
+                    //echo $this->db->last_query();
+                    redirect('/dashboard/slides','refresh');
+                }else{
+                    echo "<script>alert('图片添加失败')</script>"; 
+                    redirect('/dashboard/slides','refresh');
+                }
+            }
 		}
 
         redirect('/dashboard/slides','refresh');

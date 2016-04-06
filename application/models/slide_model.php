@@ -1,18 +1,18 @@
 <?php
-class Article_model extends CI_Model {
+class Slide_model extends CI_Model {
+
+    private $table_name = 'slides';
 
     public function __construct() {
         $this->load->database();
     }
 
     private function data_check($data) {
-        $list_no_empty = array( 'title'=>1,
-            'source' => '本站发布',
-            'category' => 1,
-            'content' => 1,
-            'author' => 1,
-            'date' => 1,
-            'time' => 1,
+        $list_no_empty = array( 'path'=>1,
+            'text' => 0,
+            'thumbnail' => 1,
+            'url' => 0,
+            'timestamp' => 0,
             'status' => 1
         );
 
@@ -27,26 +27,20 @@ class Article_model extends CI_Model {
     }
 
     public function add($data) {
-        $data == $this->data_check($data);
-
-        if(false == $data) {
+        $data = $this->data_check($data); 
+        if($data == false) {
             return false;
         }
 
-        if($this->db->insert('articles',$data)) {
+        if($this->db->insert($this->table_name,$data)) {
             return true;
         }else{
             return false;
         }
     }
 
-    public function get_articles($num, $offset) {
-        $query = $this->db->get('articles', $num, $offset);
-        return $query;
-    }
-
     public function getAll() {
-        $query = $this->db->get('articles');
+        $query = $this->db->get($this->table_name);
         return $query->result_array();
     }
 }
