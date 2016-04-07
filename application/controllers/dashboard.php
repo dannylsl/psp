@@ -291,13 +291,14 @@ class DashBoard extends CI_Controller {
         
         $config['upload_path'] = "./uploads/slides/";
         $config['allowed_types'] = "jpg|png|bmp";
-        $config['max_size'] = "1024";
-        $config['max_width'] = "1920";
-        $config['max_height'] = "1280";
+        $config['max_size'] = "2048";
+        //$config['max_width'] = "1920";
+        //$config['max_height'] = "1280";
 
         $this->load->library('upload', $config);
 	    if ( ! $this->upload->do_upload()) {
-			$data['error'] = array('error' => $this->upload->display_errors());
+			$data['error'] = $this->upload->display_errors();
+            echo "<script>alert('图片添加失败:{$data['error']}')</script>"; 
 		} else {
 			$data = array('upload_data' => $this->upload->data());
             $this->load->library('image_lib');
@@ -326,8 +327,9 @@ class DashBoard extends CI_Controller {
                     //echo $this->db->last_query();
                     redirect('/dashboard/slides','refresh');
                 }else{
-                    echo "<script>alert('图片添加失败')</script>"; 
+                    echo "<script>alert('缩略图创建失败:{$data['error']}')</script>"; 
                     redirect('/dashboard/slides','refresh');
+                    return;
                 }
             }
 		}
