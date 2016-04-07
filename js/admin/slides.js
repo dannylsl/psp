@@ -34,7 +34,34 @@ function slide_upload() {
 */
 }
 
+function del_slide() {
+    if(confirm("确定删除?") == false)
+        return
+    
+    var slide_id = $(this).closest('tr').attr('id')
+    var tr = $(this).closest('tr')
+    $.ajax({
+        url:"slide_del",
+        data: "id="+slide_id,
+        dataType: "json",
+        type:'post',
+        success: function(data) {
+            if(data.ret == 0) {
+                tr.remove()
+            }else{
+                alert("删除失败")
+            }
+        },
+        error: function() {
+            alert("网络通讯异常，请稍后重试");
+        }
+    })
+}
+
 $(document).ready(function() {
     $("#newItem").click(popDialog);
     $("#btn_save").click(slide_upload);
 })
+
+
+$(document).on('click', 'button#btn_del', del_slide)

@@ -39,6 +39,12 @@ class Slide_model extends CI_Model {
         }
     }
 
+
+    public function del($id) {
+        $this->db->where('id', $id);
+        return $this->db->delete($this->table_name);
+    }
+
     public function getAll() {
         $query = $this->db->get($this->table_name);
         return $query->result_array();

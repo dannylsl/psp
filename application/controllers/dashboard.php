@@ -335,6 +335,20 @@ class DashBoard extends CI_Controller {
         redirect('/dashboard/slides','refresh');
     }
 
+    public function slide_del() {
+        $this->islogined();
+
+        $slide_id = $this->input->post('id');
+        $this->load->model("slide_model");
+
+        if($this->slide_model->del($slide_id)) {
+            $data['ret'] = 0; //删除成功
+        }else{
+            $data['ret'] = 1; //删除失败
+        }
+        echo json_encode($data);
+    }
+
     public function category() {
         $this->load->helper("url");
         $this->load->helper("form");

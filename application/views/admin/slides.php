@@ -25,11 +25,12 @@
                             <tbody>
                                 <?php
 foreach($slides as $slide) {
-    echo "<tr>";
+    echo "<tr id='{$slide['id']}'>";
     echo '<td><img class="img-polaroid" src="'.$slide['thumbnail'].'"></td>';
     echo '<td>'.$slide['text'].'</td>';
     echo '<td>'.($slide['status']==1?'显示':'不显示').'</td>';
-    echo '<td>删除 修改</td>';
+    echo '<td><button class="btn btn-sm btn-warning" id="btn_edit">编辑</button>';
+    echo ' <button class="btn btn-sm btn-danger" id="btn_del">删除</button></td>';
     echo "</tr>";
 }
                                 ?>
