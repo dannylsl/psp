@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Mar 27, 2016 at 09:04 PM
--- Server version: 5.5.47-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.14
+-- Host: 127.0.0.1
+-- Generation Time: Apr 07, 2016 at 05:41 PM
+-- Server version: 5.6.11
+-- PHP Version: 5.5.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `gy_psp`
 --
+CREATE DATABASE IF NOT EXISTS `gy_psp` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `gy_psp`;
 
 -- --------------------------------------------------------
 
@@ -48,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `accinfo` (
 --
 
 INSERT INTO `accinfo` (`acc_id`, `accemail`, `password`, `accname`, `company`, `url`, `flow`, `adminlist`, `registertime`, `lastentrytime`, `lastentryip`, `status`) VALUES
-(1, 'test@test.com', 'e10adc3949ba59abbe56e057f20f883e', '', '', '', 0, '', '2014-11-06', '2016-03-27 17:30:41', '127.0.0.1', 1);
+(1, 'test@test.com', 'e10adc3949ba59abbe56e057f20f883e', '', '', '', 0, '', '2014-11-06', '2016-04-07 16:53:44', '127.0.0.1', 1);
 
 -- --------------------------------------------------------
 
@@ -67,19 +69,17 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `time` time NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `articles`
 --
 
 INSERT INTO `articles` (`id`, `title`, `category`, `source`, `author`, `content`, `date`, `time`, `status`) VALUES
-(2, '', 0, '', '', '', '0000-00-00', '00:00:00', 0),
-(3, '', 0, '', '', '', '0000-00-00', '00:00:00', 0),
-(4, '', 0, '', '', '', '0000-00-00', '00:00:00', 0),
-(5, '', 0, '', '', 'qweqwewqewqe', '0000-00-00', '00:00:00', 0),
-(6, '0', 0, '本站发布', '', '0', '0000-00-00', '00:00:00', 0),
-(7, 'aaaaa', 9, '本站发布', '', '<p>adfasfsfsdf</p><p><br/></p><p>asdfsdf</p><p><br/></p><p><br/></p><p>asdfdsf</p>', '0000-00-00', '00:00:00', 0);
+(7, 'aaaaa', 9, '本站发布', '', '<p>adfasfsfsdf</p><p><br/></p><p>asdfsdf</p><p><br/></p><p><br/></p><p>asdfdsf</p>', '0000-00-00', '00:00:00', 0),
+(8, 'aaaaaaa', 0, '本站发布', '', '<p>aaaaaa</p>', '0000-00-00', '00:00:00', 0),
+(9, 'aaaaaaa', 9, '本站发布', '', '<p>aaaaaa</p>', '0000-00-00', '00:00:00', 0),
+(10, 'aaaa', 9, '本站发布', '', '0', '0000-00-00', '00:00:00', 0);
 
 --
 -- Triggers `articles`
@@ -106,17 +106,14 @@ CREATE TABLE IF NOT EXISTS `captcha` (
   `word` varchar(20) NOT NULL,
   PRIMARY KEY (`captcha_id`),
   KEY `word` (`word`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 --
 -- Dumping data for table `captcha`
 --
 
 INSERT INTO `captcha` (`captcha_id`, `captcha_time`, `ip_address`, `word`) VALUES
-(33, 1459070566, '127.0.0.1', 'i27b'),
-(34, 1459070614, '127.0.0.1', 'xizs'),
-(35, 1459070621, '127.0.0.1', 'jivs'),
-(36, 1459071036, '127.0.0.1', 'st0i');
+(45, 1460040819, '127.0.0.1', 'izfk');
 
 -- --------------------------------------------------------
 
@@ -163,6 +160,31 @@ INSERT INTO `navibar` (`id`, `name`, `type`, `category`, `url`) VALUES
 (7, '时势政治', 'category', 9, 'index.php/display/category/9'),
 (8, 'cce', 'category', 8, 'index.php/display/category/8'),
 (10, 'ccc', 'fixedurl', 0, 'aaaaa');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `slides`
+--
+
+CREATE TABLE IF NOT EXISTS `slides` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `path` varchar(256) COLLATE utf8_bin NOT NULL,
+  `text` text COLLATE utf8_bin NOT NULL,
+  `thumbnail` varchar(256) COLLATE utf8_bin NOT NULL,
+  `url` varchar(500) COLLATE utf8_bin NOT NULL COMMENT '点击跳转链接',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) NOT NULL COMMENT '0 不显示 1 显示',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `slides`
+--
+
+INSERT INTO `slides` (`id`, `path`, `text`, `thumbnail`, `url`, `timestamp`, `status`) VALUES
+(2, '/uploads/slides/administrator.png', '管理员图标', '/uploads/slides/administrator_thumb.png', '', '2016-04-06 15:09:46', 0),
+(3, '/uploads/slides/aa.png', 'windows10 desktop', '/uploads/slides/aa_thumb.png', '', '2016-04-06 15:11:41', 1);
 
 -- --------------------------------------------------------
 
